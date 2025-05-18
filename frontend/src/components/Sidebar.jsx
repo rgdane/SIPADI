@@ -1,4 +1,3 @@
-import Sider from "antd/es/layout/Sider";
 import Logo from '../elements/Logo.jsx';
 import { useState } from "react";
 import {
@@ -7,17 +6,24 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 import { Menu } from "antd";
+import { Layout } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+const { Sider } = Layout;
 
 export default function Sidebar () {
+
+    const navigate = useNavigate();
+    const location = useLocation();
 
     function getItem(label, key, icon, children) {
         return { key, icon, children, label };
     }
 
     const items = [
-        getItem('Pengguna', '1', <UserOutlined />),
-        getItem('Kategori', '2', <AppstoreOutlined />),
-        getItem('Arsip', '3', <FileZipOutlined />),
+        getItem('Pengguna', '/pengguna', <UserOutlined />),
+        getItem('Kategori', '/kategori', <AppstoreOutlined />),
+        getItem('Arsip', '/arsip', <FileZipOutlined />),
     ];
 
     const [collapsed, setCollapsed] = useState(false);
@@ -35,9 +41,10 @@ export default function Sidebar () {
 
             <Menu
                 theme="light"
-                defaultSelectedKeys={['1']}
                 mode="inline"
+                selectedKeys={[location.pathname]}
                 items={items}
+                onClick={({ key }) => navigate(key)}
             />
         </Sider>
     )
