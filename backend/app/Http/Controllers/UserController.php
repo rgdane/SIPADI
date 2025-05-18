@@ -87,12 +87,17 @@ class UserController extends Controller
 
         $data = $request->validate([
             'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|email|unique:users,email',
+            'email' => 'sometimes|email|unique:users,email,' . $user->id,
             'password' => 'sometimes|string|min:8',
         ]);
 
         // Hash password sebelum disimpan
-        $data['password'] = Hash::make($data['password']);
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']); // agar tidak meng-overwrite
+        }
+
 
         $user->update($data);
 
