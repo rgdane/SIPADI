@@ -12,7 +12,9 @@ class ArchiveController extends Controller
      */
     public function index()
     {
-        $archives = Archive::whereNull('deleted_at')->get();
+        $archives = Archive::with('category')
+            ->whereNull('deleted_at')
+            ->get();
 
         return response()->json([
             'code' => 200,
@@ -28,7 +30,7 @@ class ArchiveController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'category_id' => 'required|exists:category,id',
+            'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'date' => 'required|date',
             'note' => 'nullable|string',
@@ -83,7 +85,7 @@ class ArchiveController extends Controller
         }
 
         $data = $request->validate([
-            'category_id' => 'sometimes|exists:category,id',
+            'category_id' => 'sometimes|exists:categories,id',
             'title' => 'sometimes|string|max:255',
             'date' => 'sometimes|date',
             'note' => 'nullable|string',
