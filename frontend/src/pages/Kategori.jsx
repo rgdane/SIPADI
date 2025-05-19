@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, message, Popconfirm, Space, Table } from 'antd';
+import { Button, message, Popconfirm, Space, Table, Input } from 'antd';
 import { deleteCategoryData, getCategoriesData, updateCategoryData } from '../services/categoryService';
 import TambahDataButton from '../elements/TambahDataButton';
 import TambahKategoriModal from '../modals/TambahKategoriModal';
@@ -11,6 +11,14 @@ export default function Kategori() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingData, setEditingData] = useState(null);
+    const [searchText, setSearchText] = useState('');
+
+    const filteredData = dataSource.filter(item =>
+        item.code.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.note?.toLowerCase().includes(searchText.toLowerCase())
+    );
+
 
     useEffect(() => {
         fetchData();
@@ -98,9 +106,17 @@ export default function Kategori() {
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                 <h2>Daftar Kategori</h2>
-                <TambahDataButton onClick={() => setIsModalOpen(true)} />
+                <Space>
+                    <Input.Search
+                        placeholder="Cari kategori..."
+                        allowClear
+                        onChange={(e) => setSearchText(e.target.value)}
+                        style={{ width: 200 }}
+                    />
+                    <TambahDataButton onClick={() => setIsModalOpen(true)} />
+                </Space>
             </div>
-            <Table dataSource={dataSource} columns={columns} loading={loading} />
+            <Table dataSource={filteredData} columns={columns} loading={loading} />
             
             <TambahKategoriModal
                 isModalOpen={isModalOpen}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, message, Popconfirm, Space, Table } from 'antd';
+import { Button, message, Popconfirm, Space, Table, Input } from 'antd';
 import { deleteArchiveData, getArchivesData, updateArchiveData } from '../services/archiveService';
 import TambahDataButton from '../elements/TambahDataButton';
 import TambahArsipModal from '../modals/TambahArsipModal';
@@ -11,6 +11,13 @@ export default function Arsip() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingData, setEditingData] = useState(null);
+    const [searchText, setSearchText] = useState('');
+
+    const filteredData = dataSource.filter(item =>
+        item.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.note?.toLowerCase().includes(searchText.toLowerCase()) ||
+        item.category?.name?.toLowerCase().includes(searchText.toLowerCase())
+    );
 
     useEffect(() => {
         fetchData();
@@ -103,9 +110,18 @@ export default function Arsip() {
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                 <h2>Daftar Arsip</h2>
-                <TambahDataButton onClick={() => setIsModalOpen(true)} />
+                <Space>
+                    <Input.Search
+                        placeholder="Cari arsip..."
+                        allowClear
+                        onChange={(e) => setSearchText(e.target.value)}
+                        style={{ width: 200 }}
+                    />
+                    <TambahDataButton onClick={() => setIsModalOpen(true)} />
+                </Space>
             </div>
-            <Table dataSource={dataSource} columns={columns} loading={loading} />
+
+            <Table dataSource={filteredData} columns={columns} loading={loading} />
             
             <TambahArsipModal
                 isModalOpen={isModalOpen}
