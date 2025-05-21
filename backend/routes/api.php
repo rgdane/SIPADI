@@ -17,9 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+use App\Http\Controllers\AuthController;
+
+Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('categories', CategoryController::class);
