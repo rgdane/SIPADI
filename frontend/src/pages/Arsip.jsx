@@ -4,6 +4,12 @@ import { deleteArchiveData, getArchivesData, updateArchiveData } from '../servic
 import TambahDataButton from '../elements/TambahDataButton';
 import TambahArsipModal from '../modals/TambahArsipModal';
 import UbahArsipModal from '../modals/UbahArsipModal';
+import { getCategoriesData } from '../services/categoryService';
+import { Select, DatePicker } from 'antd';
+import dayjs from 'dayjs';
+const { Option } = Select;
+const { RangePicker } = DatePicker;
+
 
 export default function Arsip() {
     const [dataSource, setDataSource] = useState([]);
@@ -12,12 +18,39 @@ export default function Arsip() {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editingData, setEditingData] = useState(null);
     const [searchText, setSearchText] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [dateRange, setDateRange] = useState([]);
 
-    const filteredData = dataSource.filter(item =>
-        item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.note?.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.category?.name?.toLowerCase().includes(searchText.toLowerCase())
-    );
+
+
+    const filteredData = dataSource.filter(item => {
+        const matchesText =
+            item.title?.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.nik?.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.date?.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.category?.name?.toLowerCase().includes(searchText.toLowerCase());
+
+        const matchesCategory = selectedCategory
+            ? item.category?.id?.toString() === selectedCategory
+            : true;
+
+        const matchesDate = dateRange.length === 2
+            ? dayjs(item.date).isAfter(dateRange[0].startOf('day')) &&
+            dayjs(item.date).isBefore(dateRange[1].endOf('day'))
+            : true;
+
+        return matchesText && matchesCategory && matchesDate;
+    });
+
+
+
+    useEffect(() => {
+        getCategoriesData()
+            .then((data) => setCategories(data))
+            .catch((err) => console.error(err));
+    }, []);
+
 
     useEffect(() => {
         fetchData();
@@ -124,6 +157,23 @@ export default function Arsip() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                 <h2>Daftar Arsip</h2>
                 <Space>
+                    <RangePicker
+                        format="YYYY-MM-DD"
+                        onChange={(dates) => setDateRange(dates || [])}
+                        style={{ width: 250 }}
+                        allowClear
+                    />
+                    <Select
+                        allowClear
+                        style={{ width: 180 }}
+                        placeholder="Filter kategori"
+                        value={selectedCategory || undefined}
+                        onChange={(value) => setSelectedCategory(value || '')}
+                    >
+                        {categories.map(cat => (
+                            <Option key={cat.id} value={String(cat.id)}>{cat.name}</Option>
+                        ))}
+                    </Select>
                     <Input.Search
                         placeholder="Cari arsip..."
                         allowClear
