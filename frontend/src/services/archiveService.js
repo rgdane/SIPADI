@@ -13,12 +13,22 @@ export async function getArchivesData() {
     }
 }
 
-export async function createArchiveData(data) {
-    return api.post('/api/archives', data);
-}
+export const createArchiveData = async (formData) => {
+    const response = await api.post('/api/archives', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+    return response.data;
+};
 
-export async function updateArchiveData(id, data) {
-    return api.post(`/api/archives/${id}?_method=PUT`, data)
+export async function updateArchiveData(id, formData) {
+    const response = api.post(`/api/archives/${id}?_method=PUT`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+    return response.data 
 }
 
 export async function deleteArchiveData(id) {

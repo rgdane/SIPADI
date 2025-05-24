@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Archive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArchiveController extends Controller
 {
@@ -33,16 +34,24 @@ class ArchiveController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'date' => 'required|date',
-            'note' => 'nullable|string',
+            'code' => 'required|string|max:255',
+            'nik' => 'required|digits:16',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:10240',
         ]);
 
-        $Archive = Archive::create($data);
+        if ($request->hasFile('file')) {
+            // simpan ke storage/app/public/files
+            $path = $request->file('file')->store('files', 'public');
+            $data['file'] = Storage::url($path); // hasilnya: /storage/files/namafile.pdf
+        }
+
+        $archive = Archive::create($data);
 
         return response()->json([
             'code' => 201,
             'status' => 'success',
             'message' => 'Archive created successfully',
-            'data' => $Archive
+            'data' => $archive
         ], 201);
     }
 
@@ -51,9 +60,9 @@ class ArchiveController extends Controller
      */
     public function show($id)
     {
-        $Archive = Archive::find($id);
+        $archive = Archive::find($id);
 
-        if (!$Archive) {
+        if (!$archive) {
             return response()->json([
                 'code' => 404,
                 'status' => 'error',
@@ -65,7 +74,7 @@ class ArchiveController extends Controller
             'code' => 200,
             'status' => 'success',
             'message' => 'Archive retrieved successfully',
-            'data' => $Archive
+            'data' => $archive
         ], 200);
     }
 
@@ -74,9 +83,9 @@ class ArchiveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Archive = Archive::find($id);
+        $archive = Archive::find($id);
 
-        if (!$Archive) {
+        if (!$archive) {
             return response()->json([
                 'code' => 404,
                 'status' => 'error',
@@ -89,15 +98,27 @@ class ArchiveController extends Controller
             'title' => 'sometimes|string|max:255',
             'date' => 'sometimes|date',
             'note' => 'nullable|string',
+            'code' => 'sometimes|string|max:255',
+            'nik' => 'sometimes|digits:16',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:10240',
         ]);
 
-        $Archive->update($data);
+        if ($request->hasFile('file')) {
+            if ($archive->file) {
+                Storage::disk('public')->delete($archive->file);
+            }
+            // simpan ke storage/app/public/files
+            $path = $request->file('file')->store('files', 'public');
+            $data['file'] = Storage::url($path); // hasilnya: /storage/files/namafile.pdf
+        }
+
+        $archive->update($data);
 
         return response()->json([
             'code' => 200,
             'status' => 'success',
             'message' => 'Archive updated successfully',
-            'data' => $Archive
+            'data' => $archive
         ], 200);
     }
 
@@ -106,9 +127,9 @@ class ArchiveController extends Controller
      */
     public function destroy($id)
     {
-        $Archive = Archive::find($id);
+        $archive = Archive::find($id);
 
-        if (!$Archive) {
+        if (!$archive) {
             return response()->json([
                 'code' => 404,
                 'status' => 'error',
@@ -116,7 +137,7 @@ class ArchiveController extends Controller
             ], 404);
         }
 
-        $Archive->delete();
+        $archive->delete();
 
         return response()->json([
             'code' => 200,

@@ -72,6 +72,11 @@ export default function Arsip() {
             key: 'name'
         },
         {
+            title: 'Nomor Dokumen',
+            dataIndex:'code',
+            key: 'code'
+        },
+        {
             title: 'Judul',
             dataIndex:'title',
             key: 'title'
@@ -82,9 +87,17 @@ export default function Arsip() {
             key: 'date'
         },
         {
-            title: 'Catatan',
-            dataIndex: 'note',
-            key: 'note'
+        title: 'Dokumen',
+        dataIndex: 'file',
+        key: 'file',
+        render: (text) =>
+            text ? (
+            <a href={`http://localhost:8000${text}`} target="_blank" rel="noopener noreferrer">
+                Lihat Dokumen
+            </a>
+            ) : (
+            <span style={{ color: 'gray' }}>Tidak ada</span>
+            ),
         },
         {
             title: 'Aksi',

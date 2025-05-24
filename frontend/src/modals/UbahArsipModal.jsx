@@ -1,4 +1,5 @@
-import { DatePicker, Form, Input, Modal, Select } from "antd";
+import { Button, DatePicker, Form, Input, Modal, Select, Upload } from "antd";
+import { UploadOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
 import { getCategoriesData } from "../services/categoryService";
 import dayjs from "dayjs";
@@ -6,8 +7,8 @@ import dayjs from "dayjs";
 export default function UbahArsipModal({ isModalOpen, handleCancel, editingData, handleUpdate }) {
     const [form] = Form.useForm();
     const [categories, setCategories] = useState([]);
+    const [fileList, setFileList] = useState([]);
 
-    // Ambil kategori saat pertama kali modal dibuka
     useEffect(() => {
         if (isModalOpen) {
             getCategoriesData()
@@ -16,26 +17,62 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
         }
     }, [isModalOpen]);
 
-    // Atur form field setelah kategori dan data siap
     useEffect(() => {
         if (editingData && categories.length > 0) {
             form.setFieldsValue({
-                category_id: String(editingData.category_id), // pastikan string
+                category_id: String(editingData.category_id),
+                code: editingData.code,
+                nik: editingData.nik,
                 title: editingData.title,
                 date: editingData.date ? dayjs(editingData.date) : null,
-                note: editingData.note,
             });
+
+            if (editingData.file) {
+                setFileList([
+                    {
+                        uid: '-1',
+                        name: editingData.file.split('/').pop(),
+                        status: 'done',
+                        url: editingData.file,
+                    },
+                ]);
+            } else {
+                setFileList([]);
+            }
         }
     }, [editingData, categories]);
 
     const handleSubmit = async () => {
         try {
             const values = await form.validateFields();
-            values.date = values.date.format("YYYY-MM-DD"); // format ke string tanggal
-            handleUpdate(values);
+            values.date = values.date.format("YYYY-MM-DD");
+
+            let file = null;
+
+            // Ambil file hanya jika user upload baru
+            if (fileList.length > 0 && fileList[0].originFileObj) {
+                file = fileList[0].originFileObj;
+            }
+
+            // Kirim file hanya jika user memilih file baru
+            const payload = new FormData();
+            payload.append("category_id", values.category_id);
+            payload.append("code", values.code);
+            payload.append("nik", values.nik);
+            payload.append("title", values.title);
+            payload.append("date", values.date);
+            if (file) {
+                payload.append("file", file); // file baru
+            }
+
+            handleUpdate(payload); // Pastikan handleUpdate mengirim FormData
         } catch (error) {
             console.error("Gagal submit:", error);
         }
+    };
+
+    const handleFileChange = ({ fileList: newFileList }) => {
+        setFileList(newFileList.slice(-1)); // Hanya satu file yang disimpan
     };
 
     return (
@@ -60,6 +97,20 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
                     </Select>
                 </Form.Item>
                 <Form.Item
+                    name="code"
+                    label="Nomor Dokumen"
+                    rules={[{ required: true, message: 'Masukkan nomor dokumen!' }]}
+                >
+                    <Input placeholder="Masukkan Nomor Dokumen" />
+                </Form.Item>
+                <Form.Item
+                    name="nik"
+                    label="NIK"
+                    rules={[{ required: true, message: 'Masukkan nik!' }]}
+                >
+                    <Input placeholder="Masukkan NIK" />
+                </Form.Item>
+                <Form.Item
                     name="title"
                     label="Judul"
                     rules={[{ required: true, message: 'Masukkan judul!' }]}
@@ -73,11 +124,15 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
                 >
                     <DatePicker placeholder="Pilih Tanggal Arsip" format="YYYY/MM/DD" style={{ width: '100%' }} />
                 </Form.Item>
-                <Form.Item
-                    name="note"
-                    label="Catatan"
-                >
-                    <Input placeholder="Masukkan Catatan Arsip" />
+                <Form.Item label="Upload Dokumen">
+                    <Upload
+                        beforeUpload={() => false}
+                        fileList={fileList}
+                        onChange={handleFileChange}
+                        maxCount={1}
+                    >
+                        <Button icon={<UploadOutlined />}>Upload Dokumen</Button>
+                    </Upload>
                 </Form.Item>
             </Form>
         </Modal>

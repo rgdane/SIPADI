@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileController;
 
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
 Route::post('/login', [AuthController::class, 'login']);

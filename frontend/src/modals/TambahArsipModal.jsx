@@ -1,7 +1,8 @@
-import { DatePicker, Form, Input, Modal, Select } from "antd";
+import { Button, DatePicker, Form, Input, Modal, Select, Upload } from "antd";
 import { createArchiveData } from "../services/archiveService";
 import { getCategoriesData } from "../services/categoryService";
 import { useEffect, useState } from "react";
+import { UploadOutlined } from '@ant-design/icons';
 
 export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchData }) {
     const [form] = Form.useForm();
@@ -18,12 +19,20 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
 
     const handleSubmit = async (values) => {
         try {
-            const formattedValues = {
-                ...values,
-                date: values.date.format('YYYY-MM-DD'),
-            };
+            const formData = new FormData();
 
-            await createArchiveData(formattedValues);
+            formData.append('category_id', values.category_id);
+            formData.append('code', values.code);
+            formData.append('nik', values.nik);
+            formData.append('title', values.title);
+            formData.append('date', values.date.format('YYYY-MM-DD'));
+            formData.append('note', values.note || '');
+
+            if (values.file?.file) {
+                formData.append('file', values.file.file); // Ambil file dari Upload
+            }
+
+            await createArchiveData(formData); // kirim FormData
             fetchData();
             setIsModalOpen(false);
             form.resetFields();
@@ -31,7 +40,6 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
             console.error('Gagal menambah data arsip:', error?.response?.data || error.message);
         }
     };
-
 
     return (
         <Modal
@@ -57,6 +65,20 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
                     </Select>
                 </Form.Item>
                 <Form.Item
+                    name="code"
+                    label="Nomor Dokumen"
+                    rules={[{ required: true, message: 'Masukkan nomor dokumen!' }]}
+                >
+                    <Input placeholder="Masukkan Nomor Dokumen" />
+                </Form.Item>
+                <Form.Item
+                    name="nik"
+                    label="NIK"
+                    rules={[{ required: true, message: 'Masukkan nik!' }]}
+                >
+                    <Input placeholder="Masukkan NIK" />
+                </Form.Item>
+                <Form.Item
                     name="title"
                     label="Judul"
                     rules={[{ required: true, message: 'Masukkan judul!' }]}
@@ -66,11 +88,10 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
                 <Form.Item name="date" label="Tanggal" rules={[{ required: true, message: 'Pilih tanggal!'  }]}>
                     <DatePicker placeholder="Pilih Tanggal Arsip" format="YYYY/MM/DD" style={{ width: '100%' }} />
                 </Form.Item>
-                <Form.Item
-                    name="note"
-                    label="Catatan"
-                >
-                    <Input placeholder="Masukkan Catatan Arsip" />
+                <Form.Item name="file" label="Upload Dokumen" valuePropName="file" getValueFromEvent={(e) => e}>
+                    <Upload beforeUpload={() => false}>
+                        <Button icon={<UploadOutlined />}>Upload Dokumen</Button>
+                    </Upload>
                 </Form.Item>
             </Form>
         </Modal>
