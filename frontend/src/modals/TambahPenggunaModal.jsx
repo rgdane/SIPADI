@@ -1,4 +1,4 @@
-import { Form, Input, Modal } from "antd";
+import { Form, Input, message, Modal } from "antd";
 import { createUserData } from "../services/userService";
 
 export default function TambahPenggunaModal({ isModalOpen, setIsModalOpen, fetchData }) {
@@ -10,8 +10,10 @@ export default function TambahPenggunaModal({ isModalOpen, setIsModalOpen, fetch
             fetchData();
             setIsModalOpen(false);
             form.resetFields();
+            message.success("Berhasil menambah data pengguna");
         } catch (error) {
             console.error('Gagal menambah data pengguna:', error?.response?.data || error.message);
+            message.gagal("Gagal menambah data pengguna");
         }
     };
 

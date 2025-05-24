@@ -49,12 +49,12 @@ export default function Pengguna() {
     const handleUpdate = async (values) => {
         try {
             await updateUserData(editingData.id, values);
-            message.success('Berhasil memperbarui pengguna!');
+            message.success('Berhasil memperbarui pengguna');
             setIsEditModalOpen(false);
             fetchData(); // refresh tabel
         } catch (error) {
-            console.error('Gagal update pengguna:', error);
-            message.error('Gagal update pengguna!');
+            console.error('Gagal memperbarui pengguna:', error);
+            message.error('Gagal memperbarui pengguna');
         }
     };
 

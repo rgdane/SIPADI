@@ -16,12 +16,12 @@ export default function Login() {
     const handleSubmit = async (values) => {
         try {
             await loginUser(values);
-            message.success("Login berhasil");
+            message.success("Berhasil Masuk");
             form.resetFields();
             navigate('/');
         } catch (error) {
             console.error(error);
-            message.error("Gagal login");
+            message.error("Gagal Masuk");
         }
     };
 

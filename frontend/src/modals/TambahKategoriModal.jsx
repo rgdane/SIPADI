@@ -1,4 +1,4 @@
-import { Form, Input, Modal } from "antd";
+import { Form, Input, message, Modal } from "antd";
 import { createCategoryData } from "../services/categoryService";
 
 export default function TambahKategoriModal({ isModalOpen, setIsModalOpen, fetchData }) {
@@ -10,8 +10,10 @@ export default function TambahKategoriModal({ isModalOpen, setIsModalOpen, fetch
             fetchData();
             setIsModalOpen(false);
             form.resetFields();
+            message.success("Berhasil menambah data kategori");
         } catch (error) {
             console.error('Gagal menambah data kategori:', error?.response?.data || error.message);
+            message.error("Gagal menambah data kategori");
         }
     };
 

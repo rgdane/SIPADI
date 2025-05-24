@@ -90,12 +90,12 @@ export default function Arsip() {
     const handleUpdate = async (values) => {
         try {
             await updateArchiveData(editingData.id, values);
-            message.success('Berhasil memperbarui arsip!');
+            message.success('Berhasil memperbarui arsip');
             setIsEditModalOpen(false);
             fetchData(); // refresh tabel
         } catch (error) {
-            console.error('Gagal update arsip:', error);
-            message.error('Gagal update arsip!');
+            console.error('Gagal memperbarui arsip:', error);
+            message.error('Gagal memperbarui arsip');
         }
     };
 

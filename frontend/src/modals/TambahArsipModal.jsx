@@ -1,4 +1,4 @@
-import { Button, DatePicker, Form, Input, Modal, Select, Upload } from "antd";
+import { Button, DatePicker, Form, Input, message, Modal, Select, Upload } from "antd";
 import { createArchiveData } from "../services/archiveService";
 import { getCategoriesData } from "../services/categoryService";
 import { useEffect, useState } from "react";
@@ -35,8 +35,10 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
             fetchData();
             setIsModalOpen(false);
             form.resetFields();
+            message.success("Berhasil menambah data arsip");
         } catch (error) {
             console.error('Gagal menambah data arsip:', error?.response?.data || error.message);
+            message.error("Gagal menambah data arsip");
         }
     };
 

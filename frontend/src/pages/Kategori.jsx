@@ -51,12 +51,12 @@ export default function Kategori() {
     const handleUpdate = async (values) => {
         try {
             await updateCategoryData(editingData.id, values);
-            message.success('Berhasil memperbarui kategori!');
+            message.success('Berhasil memperbarui kategori');
             setIsEditModalOpen(false);
             fetchData(); // refresh tabel
         } catch (error) {
-            console.error('Gagal update kategori:', error);
-            message.error('Gagal update kategori!');
+            console.error('Gagal memperbarui kategori:', error);
+            message.error('Gagal memperbarui kategori');
         }
     };
 
