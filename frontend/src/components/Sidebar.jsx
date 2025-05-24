@@ -5,6 +5,8 @@ import {
     FileZipOutlined,
     UserOutlined,
     BarChartOutlined,
+    MenuUnfoldOutlined,
+    MenuFoldOutlined,
 } from '@ant-design/icons';
 import { Menu } from "antd";
 import { Layout } from 'antd';
@@ -35,14 +37,19 @@ export default function Sidebar () {
             collapsible
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
-            theme="light"
+            style={{ backgroundColor: '#002140' }}
+            trigger={<div style={{ backgroundColor: 'rgb(2 38 71)', color: '#fff', textAlign: 'center' }}>
+                    {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                </div>
+            }
         >
             <Logo
                 collapsed={collapsed}
             />
 
             <Menu
-                theme="light"
+                style={{ backgroundColor: '#002140' }}
+                theme="dark"
                 mode="inline"
                 selectedKeys={[location.pathname]}
                 items={items}

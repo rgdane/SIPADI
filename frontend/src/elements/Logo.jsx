@@ -22,7 +22,7 @@ export default function Logo({ collapsed }){
                         marginLeft: 12,
                         fontSize: 18,
                         fontWeight: 'bold',
-                        color: '#000',
+                        color: '#fff',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         display: 'inline-block',
