@@ -3,3 +3,22 @@ html, body, #root {
   padding: 0;
   height: 100%;
 }
+
+:where(.ant-table) .ant-table-thead > tr > th {
+  background-color: #F8F0E5 !important;
+  color: #000 !important; /* Warna teks jangan samain sama background */
+}
+
+:where(.ant-table) .ant-table-thead > tr > th,
+:where(.ant-table) .ant-table-tbody > tr > td {
+  border-color: #EADBC8 !important; /* ganti dengan warna yang kamu mau */
+}
+
+th.ant-table-cell {
+  border-left: 1px solid #EADBC8;
+  border-right: none;
+}
+
+th.ant-table-cell::before {
+  display: none;
+}
