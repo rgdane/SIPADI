@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\FileController;
+use App\Http\Controllers\DashboardController;
 
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -27,3 +27,4 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::apiResource('users', UserController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('archives', ArchiveController::class);
+Route::apiResource('dashboard', DashboardController::class);

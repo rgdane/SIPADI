@@ -4,6 +4,7 @@ import Kategori from '../pages/Kategori';
 import Arsip from '../pages/Arsip';
 import { Breadcrumb, Layout } from 'antd';
 import { useMemo } from 'react';
+import Dashboard from '../pages/Dashboard';
 
 const { Content } = Layout;
 
@@ -13,6 +14,7 @@ export default function AppContent() {
 
     // Optional: bisa kasih label human readable
     const breadcrumbNameMap = {
+        dashboard: 'Dashboard',
         pengguna: 'Pengguna',
         kategori: 'Kategori',
         arsip: 'Arsip',
@@ -42,7 +44,8 @@ export default function AppContent() {
             }}
         >
             <Routes>
-            <Route path="/" element={<Navigate to="/pengguna" />} />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/pengguna" element={<Pengguna />} />
             <Route path="/kategori" element={<Kategori />} />
             <Route path="/arsip" element={<Arsip />} />

@@ -7,6 +7,7 @@ import UbahArsipModal from '../modals/UbahArsipModal';
 import { getCategoriesData } from '../services/categoryService';
 import { Select, DatePicker } from 'antd';
 import dayjs from 'dayjs';
+import { useLocation } from 'react-router-dom';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -21,7 +22,13 @@ export default function Arsip() {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [dateRange, setDateRange] = useState([]);
+    const location = useLocation();
 
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const category = params.get('category');
+        if (category) setSelectedCategory(category);
+    }, [location]);
 
 
     const filteredData = dataSource.filter(item => {

@@ -4,6 +4,7 @@ import {
     AppstoreOutlined,
     FileZipOutlined,
     UserOutlined,
+    BarChartOutlined,
 } from '@ant-design/icons';
 import { Menu } from "antd";
 import { Layout } from 'antd';
@@ -21,6 +22,7 @@ export default function Sidebar () {
     }
 
     const items = [
+        getItem('Dashboard', '/dashboard', <BarChartOutlined />),
         getItem('Pengguna', '/pengguna', <UserOutlined />),
         getItem('Kategori', '/kategori', <AppstoreOutlined />),
         getItem('Arsip', '/arsip', <FileZipOutlined />),
