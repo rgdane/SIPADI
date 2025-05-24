@@ -34,7 +34,6 @@ class ArchiveController extends Controller
             'category_id' => 'required|exists:categories,id',
             'title' => 'required|string|max:255',
             'date' => 'required|date',
-            'code' => 'required|string|max:255',
             'nik' => 'required|digits:16',
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:10240',
         ]);
@@ -98,7 +97,6 @@ class ArchiveController extends Controller
             'title' => 'sometimes|string|max:255',
             'date' => 'sometimes|date',
             'note' => 'nullable|string',
-            'code' => 'sometimes|string|max:255',
             'nik' => 'sometimes|digits:16',
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:10240',
         ]);

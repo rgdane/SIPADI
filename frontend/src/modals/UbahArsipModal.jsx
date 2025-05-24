@@ -57,7 +57,6 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
             // Kirim file hanya jika user memilih file baru
             const payload = new FormData();
             payload.append("category_id", values.category_id);
-            payload.append("code", values.code);
             payload.append("nik", values.nik);
             payload.append("title", values.title);
             payload.append("date", values.date);
@@ -95,13 +94,6 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
                             </Select.Option>
                         ))}
                     </Select>
-                </Form.Item>
-                <Form.Item
-                    name="code"
-                    label="Nomor Dokumen"
-                    rules={[{ required: true, message: 'Masukkan nomor dokumen!' }]}
-                >
-                    <Input placeholder="Masukkan Nomor Dokumen" />
                 </Form.Item>
                 <Form.Item
                     name="nik"

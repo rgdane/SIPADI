@@ -72,9 +72,9 @@ export default function Arsip() {
             key: 'name'
         },
         {
-            title: 'Nomor Dokumen',
-            dataIndex:'code',
-            key: 'code'
+            title: 'NIK',
+            dataIndex:'nik',
+            key: 'nik'
         },
         {
             title: 'Judul',

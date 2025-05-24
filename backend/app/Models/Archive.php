@@ -12,7 +12,6 @@ class Archive extends Model
     protected $table = 'archives';
     protected $fillable = [
         'category_id',
-        'code',
         'nik',
         'title',
         'date',
