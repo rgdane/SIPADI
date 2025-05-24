@@ -24,6 +24,7 @@ export default function Dashboard() {
                 {data.map((item) => (
                     <Col xs={24} sm={12} md={8} lg={6} key={item.category_id}>
                         <Card
+                            className='custom-card'
                             title={item.category_name}
                             variant='bordered'
                             actions={[

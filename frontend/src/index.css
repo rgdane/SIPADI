@@ -22,3 +22,15 @@ th.ant-table-cell {
 th.ant-table-cell::before {
   display: none;
 }
+
+.custom-card .ant-card-head {
+  background-color: #F8F0E5;
+  color: #000;
+}
+
+.custom-card {
+  border-top: none !important;
+  border-right: none !important;
+  border-left: 1px solid #EADBC8;  /* border kiri */
+  border-bottom: 1px solid #EADBC8;
+}
