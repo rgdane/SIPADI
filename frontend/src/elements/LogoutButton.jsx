@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import { useAuth } from "../services/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { LogoutOutlined } from '@ant-design/icons'
 
 export default function LogoutButton(){
     const { logoutUser } = useAuth();
@@ -12,8 +13,13 @@ export default function LogoutButton(){
     };
 
     return (
-        <Button danger onClick={handleLogout}>
-                Logout
+        <Button
+            danger
+            onClick={handleLogout}
+            className="custom-danger-button"
+            >
+            <LogoutOutlined />
+            Keluar
         </Button>
     );
 }

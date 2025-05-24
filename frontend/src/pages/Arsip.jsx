@@ -169,6 +169,7 @@ export default function Arsip() {
                         onChange={(dates) => setDateRange(dates || [])}
                         style={{ width: 250 }}
                         allowClear
+                        placeholder={['Awal', 'Akhir']}
                     />
                     <Select
                         allowClear

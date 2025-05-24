@@ -34,3 +34,16 @@ th.ant-table-cell::before {
   border-left: 1px solid #EADBC8;  /* border kiri */
   border-bottom: 1px solid #EADBC8;
 }
+
+.custom-danger-button {
+  color: #022647 !important;
+  border-color: #022647 !important;
+  background-color: #F8F0E5 !important;
+}
+
+.custom-danger-button:hover,
+.custom-danger-button:focus {
+  color: #2b68a0 !important;
+  border-color: #2b68a0 !important;
+  background-color: #f8f3ed !important;
+}

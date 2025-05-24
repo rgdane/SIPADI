@@ -32,15 +32,17 @@ export default function AppContent() {
     }, [location]);
 
     return (
-        <Content style={{ margin: '0 16px' }}>
+        <Content style={{ margin: '0 16px'}}>
         <Breadcrumb style={{ margin: '16px 0' }}>
             {breadcrumbItems}
         </Breadcrumb>
         <div
             style={{
-            padding: 24,
-            minHeight: 360,
-            background: '#fff',
+                padding: 24,
+                minHeight: 360,
+                background: '#fff',
+                borderRadius: '15px',
+                boxShadow: '-4px 4px 6px rgba(0,0,0,0.1)',
             }}
         >
             <Routes>
