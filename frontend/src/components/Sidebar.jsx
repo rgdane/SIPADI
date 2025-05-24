@@ -38,23 +38,38 @@ export default function Sidebar () {
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
             style={{ backgroundColor: '#002140' }}
-            trigger={<div style={{ backgroundColor: 'rgb(2 38 71)', color: '#fff', textAlign: 'center' }}>
+            trigger={null}
+        >
+            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                    <Logo
+                        collapsed={collapsed}
+                        />
+
+                    <Menu
+                        style={{ backgroundColor: '#002140' }}
+                        theme="dark"
+                        mode="inline"
+                        selectedKeys={[location.pathname]}
+                        items={items}
+                        onClick={({ key }) => navigate(key)}
+                        />
+                </div>
+
+                <div
+                    onClick={() => setCollapsed(!collapsed)}
+                    style={{
+                    backgroundColor: 'rgb(2 38 71)',
+                    color: '#fff',
+                    textAlign: 'center',
+                    height: '64px',
+                    lineHeight: '64px',
+                    cursor: 'pointer',
+                    }}
+                >
                     {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 </div>
-            }
-        >
-            <Logo
-                collapsed={collapsed}
-            />
-
-            <Menu
-                style={{ backgroundColor: '#002140' }}
-                theme="dark"
-                mode="inline"
-                selectedKeys={[location.pathname]}
-                items={items}
-                onClick={({ key }) => navigate(key)}
-            />
+            </div>
         </Sider>
     )
 }
