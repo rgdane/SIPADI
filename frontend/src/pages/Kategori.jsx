@@ -80,7 +80,8 @@ export default function Kategori() {
         {
             title: 'Catatan',
             dataIndex: 'note',
-            key: 'note'
+            key: 'note',
+            render: (text) => (text ? text : '-')
         },
         {
             title: 'Aksi',
