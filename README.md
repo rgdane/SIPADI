@@ -1,6 +1,6 @@
-# SIPADI Kejayan - Sistem Informasi Pengelolaan Arsip Digital
+# SIPADI - Sistem Informasi Pengelolaan Arsip Digital
 
-SIPADI Kejayan adalah aplikasi berbasis web yang dirancang untuk mempermudah proses manajemen arsip berdasarkan kategori. Sistem ini memungkinkan pengguna untuk mengelola arsip secara efisien, menampilkan statistik arsip, dan melakukan pencarian/filtering arsip secara dinamis.
+SIPADI merupakan aplikasi berbasis web yang dirancang untuk mempermudah proses manajemen arsip berdasarkan kategori. Sistem ini memungkinkan pengguna untuk mengelola arsip secara efisien, menampilkan statistik arsip, dan melakukan pencarian/filtering arsip secara dinamis.
 
 ---
 
