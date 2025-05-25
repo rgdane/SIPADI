@@ -38,8 +38,8 @@ SIPADI Kejayan adalah aplikasi berbasis web yang dirancang untuk mempermudah pro
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/username/sipadi-kejayan.git
-cd sipadi-kejayan
+git clone https://github.com/rgdane/SIPADI.git
+cd SIPADI
 ```
 
 ---
@@ -97,7 +97,7 @@ Akses aplikasi di: [http://localhost:5173](http://localhost:5173)
 ## 📁 Struktur Proyek
 
 ```bash
-sipadi-kejayan/
+SIPADI/
 │
 ├── backend/              # Laravel API
 │   └── ...
