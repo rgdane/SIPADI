@@ -59,6 +59,9 @@ export default function UbahPenggunaModal({isModalOpen, handleCancel, editingDat
                 <Form.Item
                     name="password"
                     label="Password"
+                    rules={[
+                        { min: 8, message: 'Password minimal 8 karakter!' },
+                    ]}
                 >
                     <Input.Password placeholder="Kosongkan jika tidak ingin diubah" />
                 </Form.Item>
