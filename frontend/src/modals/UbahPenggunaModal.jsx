@@ -18,8 +18,6 @@ export default function UbahPenggunaModal({isModalOpen, handleCancel, editingDat
     const handleSubmit = async () => {
         try {
         const values = await form.validateFields();
-        console.log(values);
-        
         handleUpdate(values); // kirim ke parent
         } catch (error) {
         console.error('Gagal submit:', error);
