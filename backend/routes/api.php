@@ -21,10 +21,10 @@ use App\Http\Controllers\DashboardController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/user', [AuthController::class, 'user']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', [AuthController::class, 'user']);
-
+    
     // Admin - semua akses
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('users', UserController::class);

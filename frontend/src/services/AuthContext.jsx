@@ -1,49 +1,71 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { login, getCurrentUser, logout as apiLogout } from './authService';
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const loginUser = async (credentials) => {
-        await login(credentials);
-        const userData = await getCurrentUser();
-        localStorage.setItem('user', JSON.stringify(userData));
-        setUser(userData);
-    };
-
-    const logoutUser = async () => {
-        await apiLogout();
-        localStorage.removeItem('user');
-        setUser(null);
-    };
-
-    useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
+    const loginUser = useCallback(async (credentials) => {
+        try {
+            await login(credentials);
+            const userData = await getCurrentUser();
+            setUser(userData);
+            localStorage.setItem('user', JSON.stringify(userData));
+        } catch (err) {
+            console.error('Login failed', err);
+            throw err;
         }
-
-        // Validasi session dengan backend (jika cookie/session digunakan)
-        getCurrentUser()
-            .then((userData) => {
-                setUser(userData);
-                localStorage.setItem('user', JSON.stringify(userData));
-            })
-            .catch(() => {
-                setUser(null);
-                localStorage.removeItem('user');
-            })
-            .finally(() => setLoading(false));
     }, []);
 
+    const logoutUser = useCallback(async () => {
+        try {
+            await apiLogout();
+        } catch (err) {
+            console.error('Logout failed', err);
+        } finally {
+            localStorage.removeItem('user');
+            setUser(null);
+        }
+    }, []);
+
+    const restoreSession = useCallback(async () => {
+        try {
+            const userData = await getCurrentUser();
+            setUser(userData);
+            localStorage.setItem('user', JSON.stringify(userData));
+        } catch {
+            setUser(null);
+            localStorage.removeItem('user');
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        void restoreSession(); // avoid ESLint warning for async in useEffect
+    }, [restoreSession]);
+
+    const value = {
+        user,
+        loginUser,
+        logoutUser,
+        loading,
+        isAuthenticated: Boolean(user),
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loginUser, logoutUser, loading }}>
+        <AuthContext.Provider value={value}>
             {!loading && children}
         </AuthContext.Provider>
     );
-};
+    };
 
-export const useAuth = () => useContext(AuthContext);
+    export const useAuth = () => {
+        const context = useContext(AuthContext);
+        if (!context) {
+            throw new Error('useAuth must be used within an AuthProvider');
+        }
+    return context;
+};
