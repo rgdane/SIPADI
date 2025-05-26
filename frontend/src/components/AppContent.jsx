@@ -5,6 +5,8 @@ import Arsip from '../pages/Arsip';
 import { Breadcrumb, Layout } from 'antd';
 import { useMemo } from 'react';
 import Dashboard from '../pages/Dashboard';
+import PrivateRoute from './PrivateRoute';
+import Unauthorized from '../pages/Unauthorized';
 
 const { Content } = Layout;
 
@@ -46,11 +48,47 @@ export default function AppContent() {
             }}
         >
             <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/pengguna" element={<Pengguna />} />
-            <Route path="/kategori" element={<Kategori />} />
-            <Route path="/arsip" element={<Arsip />} />
+                {/* Redirect root ke dashboard */}
+                <Route path="/" element={<Navigate to="/dashboard" />} />
+
+                {/* Bisa diakses oleh admin & pengguna */}
+                <Route
+                    path="/dashboard"
+                    element={
+                    <PrivateRoute roles={['admin', 'pengguna']}>
+                        <Dashboard />
+                    </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/kategori"
+                    element={
+                    <PrivateRoute roles={['admin', 'pengguna']}>
+                        <Kategori />
+                    </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/arsip"
+                    element={
+                    <PrivateRoute roles={['admin', 'pengguna']}>
+                        <Arsip />
+                    </PrivateRoute>
+                    }
+                />
+
+                {/* Khusus admin */}
+                <Route
+                    path="/pengguna"
+                    element={
+                    <PrivateRoute roles={['admin']}>
+                        <Pengguna />
+                    </PrivateRoute>
+                    }
+                />
+
+                {/* Halaman unauthorized */}
+                <Route path="/unauthorized" element={<Unauthorized />} />
             </Routes>
         </div>
         </Content>

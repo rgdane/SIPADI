@@ -32,6 +32,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
+            'role' => 'required|in:admin,pengguna',
         ]);
 
         // Hash password sebelum disimpan
@@ -89,6 +90,7 @@ class UserController extends Controller
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|email|unique:users,email,' . $user->id,
             'password' => 'sometimes|string|min:8',
+            'role' => 'required|in:admin,pengguna',
         ]);
 
         // Hash password sebelum disimpan

@@ -4,6 +4,7 @@ import { deleteCategoryData, getCategoriesData, updateCategoryData } from '../se
 import TambahDataButton from '../elements/TambahDataButton';
 import TambahKategoriModal from '../modals/TambahKategoriModal';
 import UbahKategoriModal from '../modals/UbahKategoriModal';
+import DeleteButton from '../elements/DeleteButton';
 
 export default function Kategori() {
     const [dataSource, setDataSource] = useState([]);
@@ -89,15 +90,7 @@ export default function Kategori() {
             render: (_, record) => (
                 <Space size="middle">
                     <Button type="primary" onClick={() => openEditModal(record)}>Ubah</Button>
-                    <Popconfirm
-                        title="Yakin ingin hapus kategori ini?"
-                        description="Data yang dihapus tidak bisa dikembalikan."
-                        okText="Ya, hapus"
-                        cancelText="Batal"
-                        onConfirm={() => handleDelete(record.id)}
-                    >
-                    <Button danger>Hapus</Button>
-                    </Popconfirm>
+                    <DeleteButton onConfirm={() => handleDelete(record.id)} />
                 </Space>
             ),
         },

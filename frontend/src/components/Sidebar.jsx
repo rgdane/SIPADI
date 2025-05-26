@@ -11,6 +11,7 @@ import {
 import { Menu } from "antd";
 import { Layout } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../services/AuthContext.jsx';
 
 const { Sider } = Layout;
 
@@ -18,17 +19,22 @@ export default function Sidebar () {
 
     const navigate = useNavigate();
     const location = useLocation();
+    const { user } = useAuth();
 
     function getItem(label, key, icon, children) {
         return { key, icon, children, label };
     }
 
-    const items = [
+    let items = [
         getItem('Dashboard', '/dashboard', <BarChartOutlined />),
-        getItem('Pengguna', '/pengguna', <UserOutlined />),
         getItem('Kategori', '/kategori', <AppstoreOutlined />),
         getItem('Arsip', '/arsip', <FileZipOutlined />),
     ];
+
+    // Tambahkan menu 'Pengguna' hanya untuk admin
+    if (user?.role === 'admin') {
+        items.splice(1, 0, getItem('Pengguna', '/pengguna', <UserOutlined />)); // disisipkan setelah Dashboard
+    }
 
     const [collapsed, setCollapsed] = useState(false);
 

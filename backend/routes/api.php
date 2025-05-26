@@ -5,6 +5,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +19,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-
-Route::middleware('auth:sanctum')->get('/user', [AuthController::class, 'user']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::apiResource('users', UserController::class);
-Route::apiResource('categories', CategoryController::class);
-Route::apiResource('archives', ArchiveController::class);
-Route::apiResource('dashboard', DashboardController::class);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', [AuthController::class, 'user']);
+
+    // Admin - semua akses
+    Route::middleware('role:admin')->group(function () {
+        Route::apiResource('users', UserController::class);
+        Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+        Route::delete('/archives/{id}', [ArchiveController::class, 'destroy']);
+    });
+
+    // Pengguna - hanya Create, Read, Update untuk categories, archives, dashboard
+    Route::middleware('role:pengguna,admin')->group(function () {
+        Route::get('/categories', [CategoryController::class, 'index']);
+        Route::get('/categories/{id}', [CategoryController::class, 'show']);
+        Route::post('/categories', [CategoryController::class, 'store']);
+        Route::put('/categories/{id}', [CategoryController::class, 'update']);
+
+        Route::get('/archives', [ArchiveController::class, 'index']);
+        Route::get('/archives/{id}', [ArchiveController::class, 'show']);
+        Route::post('/archives', [ArchiveController::class, 'store']);
+        Route::put('/archives/{id}', [ArchiveController::class, 'update']);
+
+        Route::get('/dashboard', [DashboardController::class, 'index']);
+    });
+});

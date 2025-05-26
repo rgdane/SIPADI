@@ -8,6 +8,7 @@ import { getCategoriesData } from '../services/categoryService';
 import { Select, DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
+import DeleteButton from '../elements/DeleteButton';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -145,15 +146,7 @@ export default function Arsip() {
             render: (_, record) => (
                 <Space size="middle">
                     <Button type="primary" onClick={() => openEditModal(record)}>Ubah</Button>
-                    <Popconfirm
-                        title="Yakin ingin hapus arsip ini?"
-                        description="Data yang dihapus tidak bisa dikembalikan."
-                        okText="Ya, hapus"
-                        cancelText="Batal"
-                        onConfirm={() => handleDelete(record.id)}
-                    >
-                    <Button danger>Hapus</Button>
-                    </Popconfirm>
+                    <DeleteButton onConfirm={() => handleDelete(record.id)} />
                 </Space>
             ),
         },
