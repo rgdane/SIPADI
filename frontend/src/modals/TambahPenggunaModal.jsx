@@ -54,8 +54,11 @@ export default function TambahPenggunaModal({ isModalOpen, setIsModalOpen, fetch
                 <Form.Item
                     name="password"
                     label="Password"
-                    rules={[{ required: true, message: 'Masukkan password!' }]}
-                >
+                    rules={[
+                        { required: true, message: 'Masukkan password!' },
+                        { min: 8, message: 'Password minimal 8 karakter!' },
+                    ]}
+                    >
                     <Input.Password placeholder="Masukkan Password Pengguna" />
                 </Form.Item>
             </Form>
