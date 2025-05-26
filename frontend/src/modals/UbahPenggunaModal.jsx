@@ -1,4 +1,4 @@
-import { Form, Input, Modal } from "antd";
+import { Form, Input, Modal, Select } from "antd";
 import { useEffect } from "react";
 
 export default function UbahPenggunaModal({isModalOpen, handleCancel, editingData, handleUpdate}){
@@ -7,6 +7,7 @@ export default function UbahPenggunaModal({isModalOpen, handleCancel, editingDat
     useEffect(() => {
         if (editingData) {
             form.setFieldsValue({
+                role: editingData.role,
                 name: editingData.name,
                 email: editingData.email,
                 password: editingData.password,
@@ -33,6 +34,16 @@ export default function UbahPenggunaModal({isModalOpen, handleCancel, editingDat
             onCancel={handleCancel}
         >
             <Form form={form} layout="vertical">
+                <Form.Item
+                    name="role"
+                    label="Jenis Pengguna"
+                    rules={[{ required: true, message: 'pilih jenis pengguna!' }]}
+                    >
+                    <Select placeholder="Pilih Jenis Pengguna">
+                        <Select.Option value={'admin'}>Admin</Select.Option>
+                        <Select.Option value={'pengguna'}>Pengguna</Select.Option>
+                    </Select>
+                </Form.Item>
                 <Form.Item
                     name="name"
                     label="Nama"

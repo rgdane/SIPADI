@@ -65,12 +65,18 @@ export default function Pengguna() {
             key: 'index',
             render: (text, record, index) => index + 1,
         },
-        { 
+        {
+            title: 'Jenis Pengguna',
+            dataIndex: 'role',
+            key: 'role',
+            render: (record) => (record == 'admin' ? 'Admin' : 'Pengguna')
+        },
+        {
             title: 'Nama',
             dataIndex:'name',
             key: 'name'
         },
-        { 
+        {
             title: 'Email',
             dataIndex: 'email',
             key: 'email'

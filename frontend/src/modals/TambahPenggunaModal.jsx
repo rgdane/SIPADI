@@ -1,4 +1,4 @@
-import { Form, Input, message, Modal } from "antd";
+import { Form, Input, message, Modal, Select } from "antd";
 import { createUserData } from "../services/userService";
 
 export default function TambahPenggunaModal({ isModalOpen, setIsModalOpen, fetchData }) {
@@ -27,6 +27,16 @@ export default function TambahPenggunaModal({ isModalOpen, setIsModalOpen, fetch
             cancelText="Batal"
         >
             <Form form={form} layout="vertical" onFinish={handleSubmit}>
+                <Form.Item
+                    name="role"
+                    label="Jenis Pengguna"
+                    rules={[{ required: true, message: 'pilih jenis pengguna!' }]}
+                    >
+                    <Select placeholder="Pilih Jenis Pengguna">
+                        <Select.Option value={'admin'}>Admin</Select.Option>
+                        <Select.Option value={'pengguna'}>Pengguna</Select.Option>
+                    </Select>
+                </Form.Item>
                 <Form.Item
                     name="name"
                     label="Nama"
