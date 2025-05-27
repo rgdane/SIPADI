@@ -28,12 +28,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Admin - semua akses
     Route::middleware('role:admin')->group(function () {
         Route::apiResource('users', UserController::class);
-        Route::apiResource('categories', CategoryController::class);
+        
+        Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
         Route::delete('/archives/{id}', [ArchiveController::class, 'destroy']);
+
+        Route::post('/categories', [CategoryController::class, 'store']);
+        Route::put('/categories/{id}', [CategoryController::class, 'update']);
     });
 
     // Pengguna - hanya Create, Read, Update untuk categories, archives, dashboard
     Route::middleware('role:pengguna,admin')->group(function () {
+        Route::get('/categories', [CategoryController::class, 'index']);
+        Route::get('/categories/{id}', [CategoryController::class, 'show']);
+
         Route::get('/archives', [ArchiveController::class, 'index']);
         Route::get('/archives/{id}', [ArchiveController::class, 'show']);
         Route::post('/archives', [ArchiveController::class, 'store']);
