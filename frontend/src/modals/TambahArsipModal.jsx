@@ -67,7 +67,7 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
                 </Form.Item>
                 <Form.Item
                     name="nik"
-                    label="NIK"
+                    label="NIK / Nomor KK"
                     rules={[{ required: true, message: 'Masukkan nik!' }]}
                 >
                     <Input placeholder="Masukkan NIK" />

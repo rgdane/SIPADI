@@ -97,7 +97,7 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
                 </Form.Item>
                 <Form.Item
                     name="nik"
-                    label="NIK"
+                    label="NIK / Nomor KK"
                     rules={[{ required: true, message: 'Masukkan nik!' }]}
                 >
                     <Input placeholder="Masukkan NIK" />

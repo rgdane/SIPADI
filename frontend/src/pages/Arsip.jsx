@@ -113,7 +113,7 @@ export default function Arsip() {
             key: 'name'
         },
         {
-            title: 'NIK',
+            title: 'NIK / Nomor KK',
             dataIndex:'nik',
             key: 'nik'
         },
