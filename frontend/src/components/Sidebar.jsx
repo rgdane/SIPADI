@@ -28,7 +28,7 @@ export default function Sidebar () {
     let items = [
         getItem('Dashboard', '/dashboard', <BarChartOutlined />),
         getItem('Kategori', '/kategori', <AppstoreOutlined />),
-        getItem('Arsip', '/arsip', <FileZipOutlined />),
+        getItem('Tambah Arsip', '/arsip', <FileZipOutlined />),
     ];
 
     // Tambahkan menu 'Pengguna' hanya untuk admin

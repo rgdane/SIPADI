@@ -19,7 +19,7 @@ export default function AppContent() {
         dashboard: 'Dashboard',
         pengguna: 'Pengguna',
         kategori: 'Kategori',
-        arsip: 'Arsip',
+        arsip: 'Tambah Arsip',
     };
 
     const breadcrumbItems = useMemo(() => {
