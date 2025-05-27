@@ -27,13 +27,13 @@ export default function Sidebar () {
 
     let items = [
         getItem('Dashboard', '/dashboard', <BarChartOutlined />),
-        getItem('Kategori', '/kategori', <AppstoreOutlined />),
         getItem('Tambah Arsip', '/arsip', <FileZipOutlined />),
     ];
 
     // Tambahkan menu 'Pengguna' hanya untuk admin
     if (user?.role === 'admin') {
         items.splice(1, 0, getItem('Pengguna', '/pengguna', <UserOutlined />)); // disisipkan setelah Dashboard
+        items.splice(2, 0, getItem('Kategori', '/kategori', <AppstoreOutlined />)); // disisipkan setelah Dashboard
     }
 
     const [collapsed, setCollapsed] = useState(false);

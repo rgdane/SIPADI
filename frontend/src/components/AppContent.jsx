@@ -63,7 +63,7 @@ export default function AppContent() {
                 <Route
                     path="/kategori"
                     element={
-                    <PrivateRoute roles={['admin', 'pengguna']}>
+                    <PrivateRoute roles={['admin']}>
                         <Kategori />
                     </PrivateRoute>
                     }
