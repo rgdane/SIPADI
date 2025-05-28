@@ -126,6 +126,12 @@ class UserController extends Controller
             ], 404);
         }
 
+        if ($id == 1) {
+            return response()->json([
+                'message' => 'This user cannot be deleted.'
+            ], 403);
+        }
+
         $user->delete();
 
         return response()->json([
