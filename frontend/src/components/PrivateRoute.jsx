@@ -7,7 +7,7 @@ const PrivateRoute = ({ children, roles }) => {
 
     if (loading) return null; // atau bisa pakai spinner
 
-    if (!user) {
+    if (!user || !user.role) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
