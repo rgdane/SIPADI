@@ -22,7 +22,7 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
             form.setFieldsValue({
                 category_id: String(editingData.category_id),
                 code: editingData.code,
-                nik: editingData.nik,
+                concern: editingData.concern,
                 title: editingData.title,
                 date: editingData.date ? dayjs(editingData.date) : null,
             });
@@ -57,7 +57,7 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
             // Kirim file hanya jika user memilih file baru
             const payload = new FormData();
             payload.append("category_id", values.category_id);
-            payload.append("nik", values.nik);
+            payload.append("concern", values.concern);
             payload.append("title", values.title);
             payload.append("date", values.date);
             if (file) {
@@ -96,11 +96,11 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
                     </Select>
                 </Form.Item>
                 <Form.Item
-                    name="nik"
-                    label="NIK / Nomor KK"
-                    rules={[{ required: true, message: 'Masukkan nik!' }]}
+                    name="concern"
+                    label="Perihal"
+                    rules={[{ message: 'Masukkan perihal!' }]}
                 >
-                    <Input placeholder="Masukkan NIK" />
+                    <Input placeholder="Masukkan Perihal" />
                 </Form.Item>
                 <Form.Item
                     name="title"

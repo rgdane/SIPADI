@@ -22,7 +22,7 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
             const formData = new FormData();
 
             formData.append('category_id', values.category_id);
-            formData.append('nik', values.nik);
+            formData.append('concern', values.concern);
             formData.append('title', values.title);
             formData.append('date', values.date.format('YYYY-MM-DD'));
             formData.append('note', values.note || '');
@@ -66,11 +66,11 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
                     </Select>
                 </Form.Item>
                 <Form.Item
-                    name="nik"
-                    label="NIK / Nomor KK"
-                    rules={[{ required: true, message: 'Masukkan nik!' }]}
+                    name="concern"
+                    label="Perihal"
+                    rules={[{ message: 'Masukkan perihal!' }]}
                 >
-                    <Input placeholder="Masukkan NIK" />
+                    <Input placeholder="Masukkan Perihal" />
                 </Form.Item>
                 <Form.Item
                     name="title"

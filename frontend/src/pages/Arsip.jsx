@@ -35,7 +35,7 @@ export default function Arsip() {
     const filteredData = dataSource.filter(item => {
         const matchesText =
             item.title?.toLowerCase().includes(searchText.toLowerCase()) ||
-            item.nik?.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.concern?.toLowerCase().includes(searchText.toLowerCase()) ||
             item.date?.toLowerCase().includes(searchText.toLowerCase()) ||
             item.category?.name?.toLowerCase().includes(searchText.toLowerCase());
 
@@ -113,9 +113,9 @@ export default function Arsip() {
             key: 'name'
         },
         {
-            title: 'NIK / Nomor KK',
-            dataIndex:'nik',
-            key: 'nik'
+            title: 'Perihal',
+            dataIndex:'concern',
+            key: 'concern'
         },
         {
             title: 'Judul',
