@@ -57,7 +57,11 @@ export default function TambahArsipModal({ isModalOpen, setIsModalOpen, fetchDat
                     label="Kategori"
                     rules={[{ required: true, message: 'Pilih kategori!' }]}
                 >
-                    <Select placeholder="Pilih Kategori Arsip" >
+                    <Select 
+                        showSearch
+                        placeholder="Pilih Kategori Arsip"
+                        optionFilterProp="children"
+                    >
                         {categories.map((category) => (
                             <Select.Option key={category.id} value={category.id}>
                                 {category.name}

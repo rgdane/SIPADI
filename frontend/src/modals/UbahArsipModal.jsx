@@ -87,7 +87,11 @@ export default function UbahArsipModal({ isModalOpen, handleCancel, editingData,
                     label="Kategori"
                     rules={[{ required: true, message: 'Pilih kategori!' }]}
                 >
-                    <Select placeholder="Pilih Kategori Arsip">
+                    <Select 
+                        showSearch
+                        placeholder="Pilih Kategori Arsip"
+                        optionFilterProp="children"
+                    >
                         {categories.map((category) => (
                             <Select.Option key={category.id} value={String(category.id)}>
                                 {category.name}
